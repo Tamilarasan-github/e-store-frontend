@@ -1,0 +1,93 @@
+/* You can add global styles to this file, and also import other style files */
+
+:root {
+    --hue-color: 221;
+
+    --primary-bg-color: hsl(var(--hue-color), 60%, 28%);
+    --primary-bg-color-lighter: hsl(var(--hue-color), 56%, 66%);
+    --primary-bg-color-darker: hsl(var(--hue-color), 56%, 1%);
+
+    --secondary-bg-color: hsl(var(--hue-color), 34%, 30%);
+    --secondary-bg-color-lighter: hsl(var(--hue-color), 69%, 58%);
+    --secondary-bg-color-darker: hsl(var(--hue-color), 69%, 58%);
+
+    --third-bg-color: hsl(var(--hue-color), 69%, 58%);
+    --third-bg-color-lighter: hsl(var(--hue-color), 69%, 58%);
+    --third-bg-color-darker: hsl(var(--hue-color), 69%, 58%);
+
+    --button-primary-bg-color: hsl(118, 41%, 38%);
+    --button-secondary-bg-color: hsl(224, 37%, 48%);
+    --button-third-bg-color: hsl(var(--hue-color), 69%, 58%);
+
+    --button-primary-text-color: hsl(var(--hue-color), 0%, 100%);
+    --button-secondary-text-color: hsl(var(--hue-color), 0%, 100%);
+    --button-third-text-color: hsl(var(--hue-color), 0%, 100%);
+
+    --button-pagination-text-color: hsl(var(--hue-color), 0%, 100%);
+
+    --info-bg-color:hsl(var(--hue-color), 20%, 28%);
+
+    --title-color: hsl(var(--hue-color), 0%, 100%);
+
+    --menu-text-color: hsl(var(--hue-color), 0%, 100%);
+
+    --text-color: hsl(var(--hue-color), 69%, 58%);
+    --text-color-lighter: hsl(var(--hue-color), 69%, 58%);
+    --text-color-darker: hsl(var(--hue-color), 69%, 58%);
+
+    --label-primary-color: hsl(var(--hue-color), 22%, 67%);
+    --label-secondary-color-lighter: hsl(var(--hue-color), 69%, 58%);
+    --label-third-color-darker: hsl(var(--hue-color), 69%, 58%);
+
+    --input-primary-color: hsl(var(--hue-color), 69%, 58%);
+    --input-secondary-color-lighter: hsl(var(--hue-color), 69%, 58%);
+    --input-third-color-darker: hsl(var(--hue-color), 69%, 58%);
+
+    --scroll-bar-color: hsl(var(--hue-color), 15%, 85%);
+    --scroll-bar-thumb-color: hsl(var(--hue-color), 15%, 70%);
+
+    --table-header-bg-color: var(--primary-bg-color);
+    --table-header-bg-color: #dee2e6;
+    --table-header-text-color: #212529;
+    --table-body-bg-color:#dee2e6;
+    --table-row-bg-color:hsl(var(--hue-color), 0%, 100%);;
+    --table-row-text-color:var(--primary-bg-color);
+
+    /*======================FONTS===========================*/
+
+    --title-font: 'Maven Pro', sans-serif;
+    --menu-font: 'Maven Pro', sans-serif;
+    --sub-menu-font: 'Maven Pro', sans-serif;
+
+    --h1-font: 'Poppins', sans-serif;
+    --h2-font: 'Poppins', sans-serif;
+    --h3-font: 'Poppins', sans-serif;
+    --body-font: 'Maven Pro', sans-serif;
+    --label-font: 'Maven Pro', sans-serif;
+    --input-font: 'Maven Pro', sans-serif;
+    --button-font: 'Maven Pro', sans-serif;
+    --table-font: sans-serif;
+
+    --gullible-font: 'Maven Pro', sans-serif;
+    --body-font: 'Poppins', sans-serif;
+    --roboto-font: 'Roboto', sans-serif;
+    --roboto-mono-font: 'Roboto', monospace;
+    --big-fat-font: 'Russo One', sans-serif;
+
+    /*======================FONTS WEIGHT===========================*/
+    --title-font-size: 1.2rem;
+    --menu-font-size: 1.0rem;
+    --sub-menu-font-size: 1.25rem;
+
+    --h1-font-size: 1.5rem;
+    --h2-font-size: 1.25rem;
+    --h3-font-size: 1.125rem;
+    --body-font-size: 14px;
+    --label-font-size: 14px;
+    --input-font-size: 14px;
+    --button-font-size: 14px;
+
+    /*==============================BUTTON==========================*/
+    --button-border-radius: 4px;
+    --button-primary-size:65px;
+}
