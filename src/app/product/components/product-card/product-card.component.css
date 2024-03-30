@@ -1,0 +1,35 @@
+.card {
+    width: 100%;
+    display: flex;
+    padding: 15px;
+    overflow: hidden;
+  }
+  
+  .product-image {
+    width: 25%;
+    max-width: 25%;
+  }
+  
+  .product-details {
+    width: 75%; /* Adjusted width */
+    max-width: 75%; /* Limit maximum width */
+    overflow: hidden;
+  }
+  
+  .product-name {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap; /* Prevent line breaks */
+    text-overflow: ellipsis; /* Add ellipsis for overflow */
+  }
+  
+  .product-description {
+    max-height: 100px; /* Adjusted maximum height */
+    overflow: hidden;
+  }
+  
+  .product-quantity {
+    font-size: 20px;
+    padding: 5px 15px;
+  }
+  

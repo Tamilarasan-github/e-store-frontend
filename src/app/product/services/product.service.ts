@@ -1,33 +1,95 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
-import { Product } from '../product';
+import { MainSearchService } from 'src/app/home/services/main-search.services';
+
+import { ProductDetailView } from '../model/product-detail-view.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
+  private productSearchResults: BehaviorSubject<ProductDetailView[]>;
+  public productSearchResultsObservable: Observable<ProductDetailView[]>;
 
-  constructor(private httpClient: HttpClient) { }
+  private productsInCartSubject: Subject<Map<ProductDetailView, number>>;
+  public productsInCartObservable: Observable<Map<ProductDetailView, number>>;
 
-  getProductsList() : Product[]
-  {
-    const productList : Product[] = [
-      new Product(1, 'ABC-001', 'iPhone', 'iPhone 7', 150000, '', 'Active', 9, new Date(), new Date()),
-      new Product(2, 'ABC-002', 'iPhone', 'iPhone 7 plus', 150000, '', 'Active', 9, new Date(), new Date()),
-      new Product(3, 'ABC-003', 'iPhone', 'iPhone 9', 150000, '', 'Active', 9, new Date(), new Date()),
-      new Product(4, 'ABC-004', 'iPhone', 'iPhone 9 plus', 150000, '', 'Active', 9, new Date(), new Date()),
-      new Product(5, 'ABC-005', 'iPhone', 'iPhone 11', 150000, '', 'Active', 9, new Date(), new Date()),
-      new Product(6, 'ABC-006', 'iPhone', 'iPhone 11 pro', 150000, '', 'Active', 9, new Date(), new Date()),
-      new Product(7, 'ABC-007', 'iPhone', 'iPhone 12', 150000, '', 'Active', 9, new Date(), new Date()),
-      new Product(8, 'ABC-008', 'iPhone', 'iPhone 12 pro', 150000, '', 'Active', 9, new Date(), new Date()),
-      new Product(9, 'ABC-009', 'iPhone', 'iPhone 13', 150000, '', 'Active', 9, new Date(), new Date()),
-      new Product(10, 'ABC-010', 'iPhone', 'iPhone 13 pro', 150000, '', 'Active', 9, new Date(), new Date()),
-      new Product(11, 'ABC-011', 'iPhone', 'iPhone 13 pro max', 150000, '', 'Active', 9, new Date(), new Date()),
-      new Product(12, 'ABC-012', 'iPhone', 'iPhone 14', 150000, '', 'Active', 9, new Date(), new Date()),
-      new Product(13, 'ABC-013', 'iPhone', 'iPhone 14 plus', 150000, '', 'Active', 9, new Date(), new Date()),
-      new Product(14, 'ABC-013', 'iPhone', 'iPhone 14 pro max', 150000, '', 'Active', 9, new Date(), new Date()),    
-    ]
-    return productList
+  private productsInCart: Map<ProductDetailView, number>;
+
+  constructor(
+    private httpClient: HttpClient,
+    private mainSearchService: MainSearchService
+  ) {
+    this.productSearchResults = new BehaviorSubject<ProductDetailView[]>([]);
+    this.productSearchResultsObservable =
+      this.productSearchResults.asObservable();
+
+    this.productsInCartSubject = new Subject<Map<ProductDetailView, number>>();
+    this.productsInCartObservable = this.productsInCartSubject.asObservable();
+
+    this.productsInCart = new Map<ProductDetailView, number>();
+
+    this.productsInCartObservable.subscribe((value) => {
+      this.productsInCart = value;
+    });
+
+    this.mainSearchService.productSearchResultsObservable.subscribe(
+      (productSearchResults: ProductDetailView[]) => {
+        console.log('Product Service - subscribe');
+        this.productSearchResults.next(productSearchResults);
+      }
+    );
+  }
+
+  getProductsList(): ProductDetailView[] {
+    const productList: ProductDetailView[] = [];
+    return productList;
+  }
+
+  addToCart(product: ProductDetailView) {
+    if (this.productsInCart.has(product)) {
+      const count: number = this.productsInCart.get(product)! + 1;
+      if (product.maximumPerOrder != undefined) {
+        if (count <= product.maximumPerOrder) {
+          this.productsInCart.set(product, count);
+          this.productsInCartSubject.next(this.productsInCart);
+          console.log(
+            JSON.stringify('Product exists in cart: ' + this.productsInCart)
+          );
+        } else {
+          alert(
+            'Sorry! This product you can only order maximum of ' +
+              product.maximumPerOrder +
+              ' per order'
+          );
+        }
+      }
+    } else {
+      this.productsInCart.set(product, 1);
+      this.productsInCartSubject.next(this.productsInCart);
+      console.log(
+        JSON.stringify('Newly added to cart: ' + this.productsInCart)
+      );
+    }
+  }
+
+  removeFromCart(product: ProductDetailView) {
+    if (this.productsInCart.has(product)) {
+      let count = this.productsInCart.get(product)!;
+
+      if (count == 1) {
+        count = count - 1;
+        this.productsInCart.delete(product);
+      } else if (count > 1) {
+        count = count - 1;
+        this.productsInCart.set(product, count);
+      }
+    }
+  }
+
+  getProductsInCart() {
+    return this.productsInCart;
   }
 }

@@ -1,16 +1,53 @@
-<div class="header">
-    <div id="header-logo"></div>
-    <div id="header-search-bar">
-        <div class="input-group">
-            <div class="form-outline">
-              <input type="search" id="form1" class="form-control" />
-              <label class="form-label" for="form1">Search</label>
-            </div>
-            <button type="button" class="btn btn-primary">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
+<div class="header row">
+  <div id="header-logo" class="header-logo col">
+    <img src="C:\Workspace\VisualStudioCode\e-store\src\assets\logo.png" style="width: 50px; height: auto;">
+  </div>
+  <div id="header-search-bar" class="header-search-bar col">
+
+    <div class="search-group">
+      <div class="header-category">
+        <select class="header-category-dropdown" [(ngModel)]="searchCategory">
+          <option>All</option>
+          <option>Mobiles</option>
+          <option>Electronics</option>
+          <option>Clothes</option>
+          <option>Bike Accessories</option>
+          <option>Mobile Accessories</option>
+        </select>
+      </div>
+      <div class="form-outline">
+        <input type="search" id="form1" size="65" [(ngModel)]="searchValue" class="form-control search-bar-input" />
+      </div>
+      <a routerLink="/product-list">
+        <button type="button" class="btn btn-primary" (click)="searchProducts()">
+          <i class="bi bi-search"></i>
+        </button>
+      </a>
     </div>
-    <div id="header-profile"></div>
-    <div id="header-cart"></div>
+  </div>
+
+  
+
+  <div id="header" class="col">
+    <div class="authorization-header"  *ngIf="!isUserLoggedIn">
+      <a class="bi bi-box-arrow-in-right login-header" (click)="loginPopUp(login)">Login </a>
+      <a class="bi bi-person-fill-add sign-up-header" (click)="signUpPopUp(signup)">Sign Up</a>
+      <a routerLink="/cart" class="bi bi-cart-check-fill cart-header">Cart</a>
+    </div>
+    
+    <div class="authorization-header"  *ngIf="isUserLoggedIn">
+      <a routerLink="/cart" class="bi bi-cart-check-fill cart-header">Cart</a>
+      <a routerLink="/login" class="bi bi-person-lines-fill login-header"> Profile </a>
+    </div>
+  </div>
+
+
+  <ng-template #login>
+    <app-login></app-login>
+  </ng-template>
+
+  <ng-template #signup>
+   <app-sign-up></app-sign-up>
+  </ng-template>
+
 </div>

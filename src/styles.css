@@ -91,3 +91,18 @@
     --button-border-radius: 4px;
     --button-primary-size:65px;
 }
+
+.icons
+{
+    font-size: 30px;
+}
+
+.bi-plus-square-fill
+{
+    color: green;
+}
+
+.bi-dash-square-fill
+{
+    color: darkred;
+}

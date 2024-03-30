@@ -1,6 +1,67 @@
 .header
 {
-    width: 100%;
+    min-width: 100%;
     height: 60px;
     background-color: #131921;
 }
+
+.header-logo
+{
+    min-width: 16%;
+    background-color: rgb(38, 39, 82);
+}
+
+.header-category-dropdown
+{
+    height: 38px;
+    min-width: 100%;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.search-group
+{
+        position: relative;
+        display: flex;
+        align-items: stretch;
+        width: 100%;
+        padding-top: 12px;
+}
+
+.form-outline
+{
+    min-width: 50%;
+}
+
+.header-search-bar
+{
+    min-width: 50%;
+    background-color: rgb(28, 147, 168);
+}
+
+.search-bar-input
+{
+    border-radius: 0px;
+}
+
+.authorization-header {
+    display: flex;
+    justify-content: space-around; /* Equal spaces between items */
+    align-items: center; /* Center vertically */
+    top: 0; /* Align to the top edge of the outer div */
+    left: 0; /* Align to the left edge of the outer div */
+    width: 100%; /* Inherit the width of the outer div */
+    height: 100%; /* Inherit the height of the outer div */
+    
+    border: 1px solid #ccc; /* For visualization */
+  }
+  
+  .authorization-header a {
+    text-decoration: none; /* Remove underline */
+    color: rgb(251, 248, 248); /* Set link color */
+  }
+  
+  .authorization-header a:hover {
+    color: blue; /* Change color on hover */
+  }
+  

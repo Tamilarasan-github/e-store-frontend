@@ -1,0 +1,40 @@
+export interface ProductDetailView {
+    uuid: string;
+    productId: string;
+    productCode?: string;
+    productName: string;
+    productTitle: string;
+    productCondition?: string;
+    description?: string;
+    productStatus?: string;
+    productSubCategoryId?: string;
+    categoryName?: string;
+    subCategoryName?: string;
+    brandName?: string;
+    imageUrl?: string;
+    sellerId?: string;
+    sellerName?: string;
+    totalPricePerUnit?: number;
+    finalPricePerUnit?: number;
+    taxIncluded?: boolean;
+    taxType?: string;
+    taxPercentage?: number;
+    currency?: string;
+    priceEffectiveDate?: string;
+    priceTermDate?: string;
+    discountType?: string;
+    discountAmount?: number;
+    discountPercentage?: number;
+    discountEffectiveDate?: string;
+    discountTermDate?: string;
+    discountMessage?: string;
+    totalStocks?: number;
+    availableStocks?: number;
+    reservedStocks?: number;
+    minimumPerOrder?: number;
+    maximumPerOrder?: number;
+    stockMessage?: string;
+    stocksEffectiveDate?: string;
+    stocksTermDate?: string;
+  }
+  

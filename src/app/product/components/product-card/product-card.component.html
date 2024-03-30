@@ -1,0 +1,25 @@
+<div class="card">
+    <div class="product-image">
+        <img src="https://e-store-s3-bucket.s3.amazonaws.com/{{productDetailView.imageUrl}}" style="width: 200px; height: auto;">
+    </div>
+    <div class="product-details">
+
+        <h4 class="product-name">{{productDetailView.productTitle}}</h4>
+        <b>
+            <p class="price">${{productDetailView.totalPricePerUnit}}</p>
+        </b>
+
+        <p class="product-description">{{productDetailView.description}}</p>
+        <p>
+            <i class="bi bi-dash-square-fill icons" (click)="removeFromCart(productDetailView)"></i>
+            <label class="product-quantity" *ngIf="productsInCart.has(productDetailView)">
+                <b> {{ productsInCart.get(productDetailView) }} </b>
+            </label>
+
+            <label class="product-quantity" *ngIf="!productsInCart.has(productDetailView)">
+                <b> 0 </b>
+            </label>
+            <i class="bi bi-plus-square-fill icons" (click)="addToCart(productDetailView)"></i>
+        </p>
+    </div>
+</div>
