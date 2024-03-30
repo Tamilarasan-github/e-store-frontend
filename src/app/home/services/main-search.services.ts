@@ -7,6 +7,8 @@ import { Apollo, Query, QueryRef, gql } from 'apollo-angular';
 import { FetchResult } from '@apollo/client';
 import { ProductDetailView } from 'src/app/product/model/product-detail-view.interface';
 import { Router } from '@angular/router';
+import { User, UserResponse } from '../model/user.interface';
+import { ModalPopUpService } from 'src/app/common/services/modal-pop-up.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,13 +17,18 @@ export class MainSearchService {
   private productSearchResults: BehaviorSubject<ProductDetailView[]>;
   public productSearchResultsObservable: Observable<ProductDetailView[]>;
 
-  constructor(private router: Router, private httpClient: HttpClient, private apollo: Apollo) {
+  constructor(
+    private router: Router,
+    private httpClient: HttpClient,
+    private apollo: Apollo,
+    private modalPopUp: ModalPopUpService
+  ) {
     this.productSearchResults = new BehaviorSubject<ProductDetailView[]>([]);
-    this.productSearchResultsObservable = this.productSearchResults.asObservable();
+    this.productSearchResultsObservable =
+      this.productSearchResults.asObservable();
   }
 
   searchProducts(searchRequest: MainSearch) {
-
     const yourQueryVariables = {
       searchValue: searchRequest.searchValue,
       first: 10,
@@ -41,8 +48,7 @@ export class MainSearchService {
           first: $first
           after: $after
           before: $before
-        ) 
-        {
+        ) {
           edges {
             node {
               uuid
@@ -101,5 +107,44 @@ export class MainSearchService {
     });
 
     this.router.navigate(['/product-list']);
+  }
+
+  auth(phoneNumber: string, password: string) {
+    const yourQueryVariables = {
+      phoneNumber: phoneNumber,
+      password: password,
+    };
+
+    const AUTH_DETAILS = gql`
+      query Login($phoneNumber: String!, $password: String!) {
+        login(phoneNumber: $phoneNumber, password: $password) {
+          user {
+            phoneNumber
+            jwtToken
+          }
+          errorMessage
+          successMessage
+        }
+      }
+    `;
+
+    const queryRef = this.apollo.watchQuery({
+      query: AUTH_DETAILS,
+      variables: yourQueryVariables,
+    });
+
+    queryRef.valueChanges.subscribe(({ data, loading, error }) => {
+      if (loading) {
+      } else if (error) {
+        console.error('Error:', error);
+      } else {
+        const loginData = data as {
+          login : UserResponse
+        };
+        console.log(loginData.login.user?.jwtToken);
+        this.modalPopUp.closeModalByTitle("Login");
+        alert("Sucessfully logged in.")
+      }
+    });
   }
 }
