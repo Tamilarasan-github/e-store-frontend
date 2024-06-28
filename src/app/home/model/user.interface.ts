@@ -1,4 +1,6 @@
-export interface User {
+import { ISeller } from "src/app/product/model/product.interface";
+
+export interface IUser {
     userId: number;
     uuid: string;
     jwtToken: string;
@@ -6,27 +8,27 @@ export interface User {
     userName: string;
     password?: string;
     firstName: string;
-    middleName: string;
+    middleName?: string;
     lastName: string;
     emailId: string;
     phoneNumber: string;
     gender: string;
-    dateOfBirth: Date;
-    profilePic: string;
-    lastLoginDate: Date;
+    dateOfBirth?: string;
+    profilePic?: string;
+    lastLoginDate?: string;
     userAccountStatus: string;
-    sellerId: number;
-    createdDate: Date;
-    updatedDate: Date;
+    sellerId?: number;
+    createdDate?: string;
+    updatedDate?: string;
     createdBy: string;
-    updatedBy: string;
+    updatedBy?: string;
     deleteFlag?: boolean;
   }
 
 export interface UserResponse
 {
-	user?: User;
-	users?: User[];
+	user?: IUser;
+	users?: IUser[];
 	sucessMessage?: string ;
 	errorMessage?: string;
 }

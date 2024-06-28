@@ -1,7 +1,7 @@
-export interface Product {
+export interface IProduct {
     productId: number;
     uuid: string;
-    seller: Seller; // You'll need to define the Seller interface or type
+    seller: ISeller; // You'll need to define the Seller interface or type
     productCode: string;
     productName: string;
     productTitle: string;
@@ -19,21 +19,21 @@ export interface Product {
     comments: string;
   }
 
-  export interface Seller {
+  export interface ISeller {
     sellerId: number;
     uuid: string;
     sellerName: string;
     sellerAccountStatus: string;
-    phoneNumber: string;
-    alternatePhoneNumber: string;
-    emailId: string;
-    panNumber: string;
-    gstVerificationNumber: string;
-    verificationStatus: string;
+    phoneNumber?: string;
+    alternatePhoneNumber?: string;
+    emailId?: string;
+    panNumber?: string;
+    gstVerificationNumber?: string;
+    verificationStatus?: string;
     createdDate: Date;
-    updatedDate: Date;
+    updatedDate?: Date;
     createdBy: string;
-    updatedBy: string;
+    updatedBy?: string;
     deleteFlag: boolean;
-    comments: string;
+    comments?: string;
   }

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalPopUpService } from 'src/app/common/services/modal-pop-up.service';
-import { MainSearchService } from '../../services/main-search.services';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +11,7 @@ export class LoginComponent {
   username: string;
   password: string;
 
-  constructor(private authService: MainSearchService){
+  constructor(private authService: AuthService){
     this.username="1111111111";
     this.password="123456789123456";
   }
@@ -23,5 +22,6 @@ export class LoginComponent {
     console.log(this.password);
     this.authService.auth(this.username, this.password);
   }
+
 }
 

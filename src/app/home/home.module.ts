@@ -13,11 +13,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainSearchService } from './services/main-search.services';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { LoginComponent } from './components/login/login.component';
+import { UserModule } from '../user/user.module';
+import { UserAddressComponent } from '../user/components/user-address/user-address.component';
 
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'sign-up', component: SignUpComponent },
     { path: 'cart', component: CartComponent },
+    { path: 'user-address', component: UserAddressComponent },
   ];
 
 @NgModule({
@@ -37,6 +40,7 @@ const routes: Routes = [
         CommonModule,
         NgbModule,
         HomeRoutingModule,
+        UserModule
     ],
     providers: [MainSearchService]
 })

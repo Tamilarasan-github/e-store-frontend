@@ -4,11 +4,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { MainSearch } from '../model/header-main-search-model';
 import { Apollo, Query, QueryRef, gql } from 'apollo-angular';
-import { FetchResult } from '@apollo/client';
+import { ApolloClient, ApolloQueryResult, FetchResult, NormalizedCacheObject } from '@apollo/client';
 import { ProductDetailView } from 'src/app/product/model/product-detail-view.interface';
 import { Router } from '@angular/router';
-import { User, UserResponse } from '../model/user.interface';
+import { IUser, UserResponse } from '../model/user.interface';
 import { ModalPopUpService } from 'src/app/common/services/modal-pop-up.service';
+import { ApolloClientService } from 'src/app/services/apollo-client.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,16 +17,20 @@ import { ModalPopUpService } from 'src/app/common/services/modal-pop-up.service'
 export class MainSearchService {
   private productSearchResults: BehaviorSubject<ProductDetailView[]>;
   public productSearchResultsObservable: Observable<ProductDetailView[]>;
-
+  private publicService: ApolloClient<NormalizedCacheObject> ;
+  private authorizedAccessService: ApolloClient<NormalizedCacheObject>;
+  
   constructor(
     private router: Router,
     private httpClient: HttpClient,
     private apollo: Apollo,
-    private modalPopUp: ModalPopUpService
+    private modalPopUp: ModalPopUpService,
+    private apolloClientService: ApolloClientService
   ) {
     this.productSearchResults = new BehaviorSubject<ProductDetailView[]>([]);
-    this.productSearchResultsObservable =
-      this.productSearchResults.asObservable();
+    this.productSearchResultsObservable =this.productSearchResults.asObservable();
+    this.publicService= this.apolloClientService.getApolloClient('publicUrl');
+    this.authorizedAccessService= this.apolloClientService.getApolloClient('authorizedAccessUrl');
   }
 
   searchProducts(searchRequest: MainSearch) {
@@ -76,12 +81,12 @@ export class MainSearchService {
       }
     `;
 
-    const queryRef = this.apollo.watchQuery({
+    const queryRef = this.publicService.watchQuery({
       query: GET_PRODUCT_DETAILS,
       variables: yourQueryVariables,
     });
 
-    queryRef.valueChanges.subscribe(({ data, loading, error }) => {
+    queryRef.subscribe(({ data, loading, error }) => {
       if (loading) {
       } else if (error) {
         console.error('Error:', error);
@@ -106,45 +111,55 @@ export class MainSearchService {
       }
     });
 
-    this.router.navigate(['/product-list']);
-  }
+  
 
-  auth(phoneNumber: string, password: string) {
-    const yourQueryVariables = {
-      phoneNumber: phoneNumber,
-      password: password,
-    };
+    return new Observable((observer) => {
+      queryRef.subscribe({
+        next: (result: ApolloQueryResult<any>) => {
+          const { data, loading, error } = result;
+          if (loading) {
+            // Handle loading state
+          } else if (error) {
+            console.error('Error:', error);
+            // Handle error state
+          } else {
+            const productData = data as {
+              getAllActiveProductDetailsWithStocksPriceAndDiscounts: {
+                edges: { node: ProductDetailView }[];
+              };
+            };
 
-    const AUTH_DETAILS = gql`
-      query Login($phoneNumber: String!, $password: String!) {
-        login(phoneNumber: $phoneNumber, password: $password) {
-          user {
-            phoneNumber
-            jwtToken
+            // Assuming the structure, you can extract the product array like this
+            const products: ProductDetailView[] =
+              productData.getAllActiveProductDetailsWithStocksPriceAndDiscounts.edges.map(
+                (edge) => edge.node
+              );
+
+            // Update your subject
+            this.productSearchResults.next(products);
+
+            // Log the data
+            console.log('Data:', this.productSearchResults);
+
+            this.router.navigate(['/product-list']);
           }
-          errorMessage
-          successMessage
-        }
-      }
-    `;
+        },
+        error: (err) => {
+          console.error('Subscription error:', err);
+          observer.error(err); // Propagate error to the subscriber
+        },
+      });
 
-    const queryRef = this.apollo.watchQuery({
-      query: AUTH_DETAILS,
-      variables: yourQueryVariables,
-    });
-
-    queryRef.valueChanges.subscribe(({ data, loading, error }) => {
-      if (loading) {
-      } else if (error) {
-        console.error('Error:', error);
-      } else {
-        const loginData = data as {
-          login : UserResponse
-        };
-        console.log(loginData.login.user?.jwtToken);
-        this.modalPopUp.closeModalByTitle("Login");
-        alert("Sucessfully logged in.")
-      }
+    
+      
     });
   }
+
+
+
+
 }
+
+   
+   
+

@@ -1,13 +1,17 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { CommonRoutingModule } from './common-routing.module';
 import { ModalPopUpComponent } from './components/modal-pop-up/modal-pop-up.component';
+import { SpinnerComponent } from './components/spinner/spinner/spinner.component';
 
 
 @NgModule({
   declarations: [
-    ModalPopUpComponent
+    ModalPopUpComponent,
+    SpinnerComponent
+  ],
+  exports: [
+    SpinnerComponent
   ],
   imports: [
     CommonModule,

@@ -1,6 +1,12 @@
-<div class="flex-container">
-    <app-product-filter> </app-product-filter>
+<div class="d-flex justify-content-between">
 
+
+
+<div class="flex-filter-container">
+    <app-product-filter> </app-product-filter>
+</div>
+
+<div class="flex-product-container">
     <div *ngIf="productList && productList.length">
         <div>
             <!-- <div class="product flex-products" *ngFor="let product of productList"> -->
@@ -11,4 +17,6 @@
             </div>
         </div>
     </div>
+</div>
+
 </div>

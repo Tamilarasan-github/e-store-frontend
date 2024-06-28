@@ -36,8 +36,17 @@
     </div>
     
     <div class="authorization-header"  *ngIf="isUserLoggedIn">
-      <a routerLink="/cart" class="bi bi-cart-check-fill cart-header">Cart</a>
-      <a routerLink="/login" class="bi bi-person-lines-fill login-header"> Profile </a>
+      <a class="bi bi-cart-check-fill cart-header">Cart</a>
+      <a class="bi bi-person-lines-fill login-header dropdown-container" (click)="userProfileActions($event)"> {{this.authorizedUser?.firstName}} {{this.authorizedUser?.lastName}} 
+      <div class="dropdown-content" *ngIf="showUserProfileActionsDropdown">
+        <!-- Dropdown content here -->
+        <a href="#">User Account</a>
+        <a routerLink="/user-orders">Your Orders</a>
+        <a routerLink="/user-address">Your Addresses</a>
+        <a href="#" *ngIf="true">Seller Account</a>
+        <a (click)="logOff()">Log out</a>
+      </div>
+    </a>
     </div>
   </div>
 

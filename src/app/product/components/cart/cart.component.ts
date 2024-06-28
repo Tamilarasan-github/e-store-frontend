@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { VirtualTimeScheduler } from 'rxjs';
 
 import { ProductService } from 'src/app/product/services/product.service';
-import { Product } from '../../model/product.interface';
+import { IProduct } from '../../model/product.interface';
 import { ProductDetailView } from '../../model/product-detail-view.interface';
 
 @Component({
